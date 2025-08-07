@@ -27,7 +27,7 @@
     "url": "https://github.com/kkokotero/boxels-config"
   },
   "bugs": {
-    "url": "https://github.com/kkokotero/boxels/issues"
+    "url": "https://github.com/kkokotero/boxels-config/issues"
   },
   "main": "./dist/src/index.js",
   "module": "./dist/src/index.js",
