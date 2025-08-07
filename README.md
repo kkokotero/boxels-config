@@ -69,7 +69,7 @@ npm run test
 | `box build`   | Compila el proyecto para producción.                         |
 | `box preview` | Sirve la aplicación construida para pruebas locales.         |
 | `box test`    | Ejecuta pruebas con soporte para `Vitest` + entorno DOM.     |
-| `box new`     | (Deshabilitado temporalmente) Crea un nuevo proyecto Boxels. |
+| `box new`     | Crea un nuevo proyecto Boxels.                               |
 | `box --help`  | Muestra la ayuda general y los comandos disponibles.         |
 
 ---
