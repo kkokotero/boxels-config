@@ -1,0 +1,43 @@
+{
+	"compilerOptions": {
+		/* Language and Environment */
+		"target": "ES2022",
+		"lib": ["ES2022", "DOM", "DOM.Iterable"],
+		"useDefineForClassFields": true,
+
+		/* Module Resolution */
+		"module": "es2022",
+		"moduleResolution": "bundler",
+		"allowImportingTsExtensions": true,
+		"verbatimModuleSyntax": true,
+		"moduleDetection": "force",
+		"skipLibCheck": true,
+		"noEmit": true,
+
+		/* Experimental Features */
+		"experimentalDecorators": true,
+		"emitDecoratorMetadata": true,
+
+		/* Declarations */
+		"declaration": true,
+		"types": ["./node_modules/boxels/dist/types/index.d.ts"],
+
+		/* Strictness */
+		"strict": true,
+
+		/* Path Mapping */
+		"baseUrl": "./",
+		"rootDir": "./",
+		"allowJs": true,
+		
+		/* JSX */
+		"jsx": "react-jsx",
+		"jsxImportSource": "boxels",
+
+		"paths": {
+			"@config/*": ["./src/config/*"],
+			"@utils/*": ["./src/utils/*"],
+			"@cli/*": ["./src/cli/*"],
+		}
+	},
+}

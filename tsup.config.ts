@@ -1,0 +1,32 @@
+import { defineConfig } from 'tsup';
+
+export default defineConfig({
+		entry: ['src/**/*.ts'],
+		format: ['cjs'],
+		splitting: true,
+		minify: true,
+		dts: true,
+		clean: true,
+		platform: 'node',
+		tsconfig: './tsconfig.json',
+		target: 'es2022',
+		shims: true,
+		bundle: true,
+		treeshake: true,
+		outDir: 'dist',
+		external: [
+			'vite',
+			'util',
+			'url',
+			'events',
+			'path',
+			'fs',
+			'assert',
+			'stream',
+			'constants',
+			'readline',
+			'module',
+			'os',
+		],
+		onSuccess: 'chmod +x ./dist/index.cjs',
+	});
