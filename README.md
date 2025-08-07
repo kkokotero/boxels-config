@@ -8,6 +8,59 @@ La **CLI de Boxels**, invocable con el comando `box`, es una herramienta de lín
 
 Este paquete proporciona la CLI oficial de [Boxels](https://github.com/kkokotero/boxels). Úsala para crear, construir, testear y configurar tus proyectos de manera sencilla.
 
+## Instalación
+
+Puedes instalar la CLI globalmente o como dependencia de desarrollo en tu proyecto.
+
+### Opción 1: Uso global (recomendado)
+
+Instala el paquete de manera global para poder usar el comando `box` desde cualquier lugar:
+
+```bash
+npm install -g boxels-config
+```
+
+Luego simplemente ejecuta:
+
+```bash
+box serve
+```
+
+---
+
+### Opción 2: Uso local (por proyecto)
+
+También puedes instalar la CLI como una dependencia de desarrollo:
+
+```bash
+npm install --save-dev boxels-config
+```
+
+Y agregar un script en tu `package.json` para facilitar su uso:
+
+```json
+"scripts": {
+  "dev": "box serve",
+  "build": "box build",
+  "test": "box test"
+}
+```
+
+Después puedes ejecutar los comandos así:
+
+```bash
+npm run dev
+npm run build
+npm run test
+```
+
+---
+
+### Requisitos
+
+* Node.js v18 o superior
+* NPM v7 o superior
+
 ## ¿Qué puedes hacer con `box`?
 
 | Comando       | Descripción                                                  |
