@@ -4,16 +4,9 @@ import { logger } from '@utils/index';
 import fs from 'node:fs';
 import path from 'node:path';
 
-interface IntegrateElectronCommand {
-	template?: string;
-}
-
 program
 	.command('integrate:electron', 'Integra Electron al proyecto actual.')
-	.option('--template <template>', 'Plantilla de Electron: basic o preload', {
-		default: 'basic',
-	})
-	.action((options: IntegrateElectronCommand) => {
+	.action(() => {
 		try {
 			logger.info('Instalando dependencias de Electron...');
 			execSync('npm install --save-dev electron electron-builder', {
@@ -34,19 +27,18 @@ program
 				fs.writeFileSync(
 					mainFile,
 					`
-const { app, BrowserWindow } = require('electron');
-const path = require('path');
+impoort { app, BrowserWindow } from 'electron';
 
 function createWindow () {
   const win = new BrowserWindow({
     width: 800,
     height: 600,
     webPreferences: {
-      preload: path.join(__dirname, 'preload.js')
+      preload: 'preload.js'
     }
   });
 
-  win.loadFile(path.join(__dirname, '../dist/index.html'));
+  win.loadFile('../dist/index.html');
 }
 
 app.whenReady().then(() => {

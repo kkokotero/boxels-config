@@ -32,9 +32,15 @@ function updatePackageJson(commands: Record<string, string>) {
 
 program
 	.command('integrate:capacitor', 'Integra Capacitor al proyecto actual.')
-	.option('--app-name <name>', 'Nombre de la aplicación')
-	.option('--app-id <id>', 'ID de la aplicación (ej: com.ejemplo.app)')
-	.option('--platforms <list>', 'Plataformas separadas por coma (android, ios)', { default: 'android' })
+	.option('--app-name <name>', 'Nombre de la aplicación', { default: 'mi-app' })
+	.option('--app-id <id>', 'ID de la aplicación (ej: com.ejemplo.app)', {
+		default: 'com.miapp.app',
+	})
+	.option(
+		'--platforms <list>',
+		'Plataformas separadas por coma (android, ios)',
+		{ default: 'android' },
+	)
 	.action(async (options: IntegrateCapacitorCommand) => {
 		try {
 			// Cargar config aquí para evitar await de alto nivel
@@ -44,7 +50,9 @@ program
 			const appId = options.appId || config.root;
 
 			logger.info('Instalando dependencias de Capacitor...');
-			execSync('npm install @capacitor/core @capacitor/cli', { stdio: 'inherit' });
+			execSync('npm install @capacitor/core @capacitor/cli', {
+				stdio: 'inherit',
+			});
 
 			logger.info('Inicializando Capacitor...');
 			execSync(`npx cap init "${appName}" "${appId}"`, { stdio: 'inherit' });
@@ -66,7 +74,9 @@ program
 			updatePackageJson({
 				'cap:sync': 'npx cap sync',
 				'cap:android': 'npx cap run android',
-				'cap:ios': 'npx cap run ios'
+				'cap:add:android': 'npx cap add android',
+				'cap:ios': 'npx cap run ios',
+				'cap:add:ios': 'npx cap add ios',
 			});
 
 			logger.success('Integración con Capacitor completada.');
