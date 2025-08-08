@@ -7,8 +7,8 @@ const CAPACITOR_PLATFORMS = ['android', 'ios'] as const;
 type CapacitorPlatform = (typeof CAPACITOR_PLATFORMS)[number];
 
 interface IntegrateCapacitorCommand {
-	appName: string;
-	appId: string;
+	appName?: string;
+	appId?: string;
 	platforms?: string;
 }
 
@@ -32,16 +32,22 @@ function updatePackageJson(commands: Record<string, string>) {
 
 program
 	.command('integrate:capacitor', 'Integra Capacitor al proyecto actual.')
-	.option('--app-name <name>', 'Nombre de la aplicación', { default: (await userDefinedConfig).root })
-	.option('--app-id <id>', 'ID de la aplicación (ej: com.ejemplo.app)', { default: (await userDefinedConfig).root })
+	.option('--app-name <name>', 'Nombre de la aplicación')
+	.option('--app-id <id>', 'ID de la aplicación (ej: com.ejemplo.app)')
 	.option('--platforms <list>', 'Plataformas separadas por coma (android, ios)', { default: 'android' })
 	.action(async (options: IntegrateCapacitorCommand) => {
 		try {
+			// Cargar config aquí para evitar await de alto nivel
+			const config = await userDefinedConfig;
+
+			const appName = options.appName || config.root;
+			const appId = options.appId || config.root;
+
 			logger.info('Instalando dependencias de Capacitor...');
 			execSync('npm install @capacitor/core @capacitor/cli', { stdio: 'inherit' });
 
 			logger.info('Inicializando Capacitor...');
-			execSync(`npx cap init "${options.appName}" "${options.appId}"`, { stdio: 'inherit' });
+			execSync(`npx cap init "${appName}" "${appId}"`, { stdio: 'inherit' });
 
 			const platforms = options.platforms?.split(',') as CapacitorPlatform[];
 			for (const platform of platforms) {

@@ -13,7 +13,7 @@ program
 	.option('--template <template>', 'Plantilla de Electron: basic o preload', {
 		default: 'basic',
 	})
-	.action(async (options: IntegrateElectronCommand) => {
+	.action((options: IntegrateElectronCommand) => {
 		try {
 			logger.info('Instalando dependencias de Electron...');
 			execSync('npm install --save-dev electron electron-builder', {
@@ -82,7 +82,7 @@ window.addEventListener('DOMContentLoaded', () => {
 				);
 			}
 
-			// Modificar package.json para añadir scripts
+			// Modificar package.json
 			const pkgPath = path.resolve(process.cwd(), 'package.json');
 			const pkg = JSON.parse(fs.readFileSync(pkgPath, 'utf-8'));
 
