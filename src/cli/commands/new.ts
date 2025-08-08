@@ -15,10 +15,11 @@ import {
 	writeFileSync,
 	renameSync,
 } from 'node:fs';
-import { resolve, join } from 'node:path';
+import { resolve,dirname, join } from 'node:path';
 import { execSync } from 'node:child_process';
 import { bold, cyan, red } from 'kolorist';
 import { program } from '@cli/program';
+import { fileURLToPath } from 'node:url';
 
 // ==========================
 // Constantes y tipos
@@ -146,8 +147,35 @@ function validarOpciones(opciones: OpcionesUsuarioProyecto): string[] {
 // Generar estructura del proyecto
 // ==========================
 
-async function generarProyecto(opciones: OpcionesUsuarioProyecto, directorioDestino: string) {
-	const directorioPlantilla = resolve(process.cwd(), 'templates', opciones.plantilla);
+const __dirname = dirname(fileURLToPath(import.meta.url));
+
+function encontrarDirectorioTemplates(): string | null {
+	let actual = __dirname;
+
+	while (true) {
+		const posible = join(actual, 'templates');
+		if (existsSync(posible)) {
+			return posible;
+		}
+
+		const padre = dirname(actual);
+		if (padre === actual) break; // llegó a la raíz
+		actual = padre;
+	}
+
+	return null;
+}
+
+export async function generarProyecto(opciones: OpcionesUsuarioProyecto, directorioDestino: string) {
+	const raizTemplates = encontrarDirectorioTemplates();
+
+	if (!raizTemplates) {
+		outro('No se encontró el directorio "templates".');
+		process.exit(1);
+	}
+
+	const directorioPlantilla = join(raizTemplates, opciones.plantilla);
+
 	if (!existsSync(directorioPlantilla)) {
 		outro(red(`Plantilla no encontrada: ${opciones.plantilla}`));
 		process.exit(1);
@@ -163,7 +191,6 @@ async function generarProyecto(opciones: OpcionesUsuarioProyecto, directorioDest
 		__PROJECT_SLUG__: opciones.nombre.toLowerCase().replace(/\s+/g, '-'),
 	});
 }
-
 // ==========================
 // Utilidades de transformación
 // ==========================
