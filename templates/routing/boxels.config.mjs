@@ -1,9 +1,8 @@
 import { defineConfig } from 'boxels-config';
-import { resolve } from 'node:path';
 
 export default defineConfig({
 	root: 'src',
-	publicDir: resolve(process.cwd(), 'public'),
+	publicDir: '../public',
 	build: {
 		input: 'src/index.html',
 	},

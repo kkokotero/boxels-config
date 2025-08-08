@@ -90,6 +90,7 @@ async function pedirDetallesProyecto(
 			message: 'Selecciona una plantilla:',
 			options: [
 				{ value: 'basic', label: 'Proyecto básico' },
+				{ value: 'routing', label: 'Proyecto con rutas (SPA)' },
 			],
 		}));
 		if (isCancel(plantilla)) return null;
@@ -253,7 +254,7 @@ async function instalarDependencias(directorioDestino: string) {
 		execSync('npm install', { cwd: directorioDestino, stdio: 'ignore' });
 		s.stop('Dependencias instaladas.');
 	} catch {
-		s.stop('❌ Falló la instalación automática.');
+		s.stop('Falló la instalación automática.');
 	}
 }
 

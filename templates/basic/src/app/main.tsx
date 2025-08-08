@@ -10,12 +10,11 @@ export const App = () => {
 			<h1>__PROJECT_NAME__</h1>
 
 			<section class={styles.counter}>
-				<h2>Contador</h2>
-				<p aria-live="polite" class="count-display">
+				<p class={styles.countDisplay}>
 					{count}
 				</p>
 
-				<div class="actions">
+				<div class={styles.actions}>
 					<button
 						type="button"
 						aria-label="Disminuir contador"

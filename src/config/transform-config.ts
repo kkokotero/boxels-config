@@ -20,10 +20,7 @@ export function mergeBoxelsConfig(
 			...(baseConfig.define ?? {}),
 			...(userConfig.define ?? {}),
 		},
-		plugins: [
-			...(baseConfig.plugins ?? []),
-			...(userConfig.plugins ?? []),
-		],
+		plugins: [...(baseConfig.plugins ?? []), ...(userConfig.plugins ?? [])],
 		server: {
 			...(baseConfig.server ?? {}),
 			...(userConfig.server ?? {}),
@@ -58,14 +55,12 @@ export function transformBoxelsConfig(config: BoxelsConfig): {
 	const viteBuild: UserConfig['build'] | undefined = build
 		? {
 				...build,
-				rollupOptions: build.input
-					? { input: build.input as any }
-					: undefined,
-		  }
+				rollupOptions: build.input ? { input: build.input as any } : undefined,
+			}
 		: undefined;
 
 	const viteConfig: UserConfig = {
-		resolve: alias ? { alias } : undefined,
+		resolve: alias ? { alias } : {},
 		define,
 		logLevel,
 		plugins,
@@ -88,12 +83,11 @@ export function transformBoxelsConfig(config: BoxelsConfig): {
  * la transforma, y la combina con la configuración estándar de Vite.
  */
 export function resolveFinalViteConfig(userConfig: BoxelsConfig): UserConfig {
-
 	// 2. Transformar a configuración Vite + extras
 	const { viteConfig, boxelsExtra } = transformBoxelsConfig(userConfig);
 
 	// 3. Fusionar con config base de Vite (standardConfig)
-	const finalViteConfig = mergeConfig(standardConfig, viteConfig);
+	const finalViteConfig: UserConfig = mergeConfig(standardConfig, viteConfig);
 
 	// 4. Insertar estilos globales si aplica
 	if (
@@ -105,9 +99,11 @@ export function resolveFinalViteConfig(userConfig: BoxelsConfig): UserConfig {
 		finalViteConfig.css.preprocessorOptions.scss ??= {};
 
 		const scss = finalViteConfig.css.preprocessorOptions.scss;
-		const importLine = `@import "${boxelsExtra.globalStyles}";`;
-		scss.additionalData = `${importLine}\n${scss.additionalData ?? ''}`;
+		const importLine = `@use "${boxelsExtra.globalStyles}" as *;`;
+		scss.additionalData = `${scss.additionalData ?? ''}\n${importLine}`;
 	}
+
+	console.log(finalViteConfig.publicDir);
 
 	return finalViteConfig;
 }

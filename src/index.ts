@@ -1,6 +1,5 @@
 #!/usr/bin/env node
 
-import './dom';
 import { program } from '@cli/index';
 import { logger } from '@utils/index';
 

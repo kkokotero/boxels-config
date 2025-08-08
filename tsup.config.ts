@@ -2,7 +2,7 @@ import { defineConfig } from 'tsup';
 
 export default defineConfig({
 		entry: ['src/**/*.ts'],
-		format: ['cjs', 'esm'],
+		format: ['cjs'],
 		splitting: true,
 		minify: true,
 		dts: true,

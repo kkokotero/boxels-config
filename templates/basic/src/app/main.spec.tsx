@@ -14,7 +14,7 @@ describe('App', () => {
 
 	it('muestra el título del proyecto', () => {
 		expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent(
-			'__PROJECT_NAME__',
+			'sermental',
 		);
 	});
 
