@@ -1,10 +1,4 @@
-import { expect } from 'vitest';
-import '@testing-library/jest-dom';
-import * as matchers from '@testing-library/jest-dom/matchers';
-
 import { parseHTML } from 'linkedom';
-
-expect.extend(matchers);
 
 const { window } = parseHTML('<!doctype html><html><body></body></html>');
 
