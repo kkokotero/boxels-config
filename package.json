@@ -1,95 +1,95 @@
 {
-	"name": "boxels-config",
-	"type": "module",
-	"version": "1.1.0",
-	"private": false,
-	"keywords": [
-		"boxels",
-		"boxels-cli",
-		"cli",
-		"vite",
-		"frontend",
-		"typescript",
-		"build-tool",
-		"scaffolding",
-		"spa",
-		"devtools",
-		"framework"
-	],
-	"description": "CLI oficial para proyectos basados en Boxels: creación, build, testing y más.",
-	"publishConfig": {
-		"access": "public"
-	},
-	"license": "MIT",
-	"homepage": "https://github.com/kkokotero/boxels-config#readme",
-	"repository": {
-		"type": "git",
-		"url": "https://github.com/kkokotero/boxels-config"
-	},
-	"bugs": {
-		"url": "https://github.com/kkokotero/boxels-config/issues"
-	},
-	"main": "./dist/src/index.js",
-	"module": "./dist/src/index.js",
-	"types": "./dist/types/index.d.ts",
-	"exports": {
-		".": {
-			"import": "./dist/config/index.cjs",
-			"require": "./dist/config/index.cjs",
-			"types": "./dist/config/index.d.cts"
-		}
-	},
-	"typesVersions": {
-		"*": {
-			"*": [
-				"./dist/*"
-			]
-		}
-	},
-	"files": [
-		"dist/",
-		"templates/",
-		"README.md",
-		"LICENSE.txt",
-		"CHANGELOG.md",
-		"CONTRIBUTING.md",
-		"CODE_OF_CONDUCT.md",
-		"SECURITY.md"
-	],
-	"engines": {
-		"node": ">=18"
-	},
-	"bin": {
-		"box": "./dist/index.cjs"
-	},
-	"scripts": {
-		"build": "tsup",
-		"bin": "node ./dist/index.cjs",
-		"prepublishOnly": "npm run build"
-	},
-	"devDependencies": {
-		"@biomejs/biome": "2.1.1",
-		"@clack/prompts": "^0.11.0",
-		"@types/node": "^24.0.13",
-		"@types/signale": "^1.4.7",
-		"@vitest/ui": "3.2.4",
-		"cac": "^6.7.14",
-		"execa": "^9.6.0",
-		"kolorist": "^1.8.0",
-		"signale": "^1.4.0",
-		"ts-node": "^10.9.2",
-		"tsup": "^8.5.0",
-		"typescript": "^5.9.2",
-		"vite-tsconfig-paths": "^6.0.0-beta.3"
-	},
-	"dependencies": {
+  "name": "boxels-config",
+  "type": "module",
+  "version": "1.2.0",
+  "private": false,
+  "keywords": [
+    "boxels",
+    "boxels-cli",
+    "cli",
+    "vite",
+    "frontend",
+    "typescript",
+    "build-tool",
+    "scaffolding",
+    "spa",
+    "devtools",
+    "framework"
+  ],
+  "description": "CLI oficial para proyectos basados en Boxels: creación, build, testing y más.",
+  "publishConfig": {
+    "access": "public"
+  },
+  "license": "MIT",
+  "homepage": "https://github.com/kkokotero/boxels-config#readme",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/kkokotero/boxels-config"
+  },
+  "bugs": {
+    "url": "https://github.com/kkokotero/boxels-config/issues"
+  },
+  "main": "./dist/src/index.js",
+  "module": "./dist/src/index.js",
+  "types": "./dist/types/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/config/index.cjs",
+      "require": "./dist/config/index.cjs",
+      "types": "./dist/config/index.d.cts"
+    }
+  },
+  "typesVersions": {
+    "*": {
+      "*": [
+        "./dist/*"
+      ]
+    }
+  },
+  "files": [
+    "dist/",
+    "templates/",
+    "README.md",
+    "LICENSE.txt",
+    "CHANGELOG.md",
+    "CONTRIBUTING.md",
+    "CODE_OF_CONDUCT.md",
+    "SECURITY.md"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "bin": {
+    "box": "./dist/index.cjs"
+  },
+  "scripts": {
+    "build": "tsup",
+    "bin": "node ./dist/index.cjs",
+    "prepublishOnly": "npm run build"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "2.1.1",
+    "@clack/prompts": "^0.11.0",
+    "@types/node": "^24.0.13",
+    "@types/signale": "^1.4.7",
+    "@vitest/ui": "3.2.4",
+    "cac": "^6.7.14",
+    "execa": "^9.6.0",
+    "kolorist": "^1.8.0",
+    "signale": "^1.4.0",
+    "ts-node": "^10.9.2",
+    "tsup": "^8.5.0",
+    "typescript": "^5.9.2",
+    "vite-tsconfig-paths": "^6.0.0-beta.3"
+  },
+  "dependencies": {
     "@testing-library/dom": "^10.4.1",
-		"@testing-library/jest-dom": "^6.6.4",
-		"boxels": "^1.0.1",
-		"linkedom": "^0.18.11",
-		"sass": "^1.89.2",
-		"tsx": "^4.20.3",
-		"vite": "^7.0.4",
-		"vitest": "^3.2.4"
-	}
+    "@testing-library/jest-dom": "^6.6.4",
+    "boxels": "^1.0.1",
+    "linkedom": "^0.18.11",
+    "sass": "^1.89.2",
+    "tsx": "^4.20.3",
+    "vite": "^7.0.4",
+    "vitest": "^3.2.4"
+  }
 }
