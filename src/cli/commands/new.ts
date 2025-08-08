@@ -25,7 +25,7 @@ import { fileURLToPath } from 'node:url';
 // Constantes y tipos
 // ==========================
 
-const ESTILOS_VALIDOS = ['css', 'scss', 'sass', 'less', 'styl'] as const;
+const ESTILOS_VALIDOS = ['css', 'scss', 'sass'] as const;
 
 interface OpcionesUsuarioProyecto {
 	nombre: string;

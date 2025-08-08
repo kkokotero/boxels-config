@@ -35,6 +35,6 @@ coverage
 
 .boxels
 
-boxels.config.js
-boxels.config.mjs
-boxels.config.cjs
+./boxels.config.js
+./boxels.config.mjs
+./boxels.config.cjs

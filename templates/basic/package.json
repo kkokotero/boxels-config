@@ -1,13 +1,21 @@
 {
-	"name": "basic",
-	"module": "index.ts",
+	"name": "__PROJECT_SLUG__",
 	"type": "module",
 	"private": true,
+	"scripts": {
+		"dev": "box serve",
+		"build": "box build",
+		"test": "box test",
+		"test:ui": "box test --ui"
+	},
 	"peerDependencies": {
 		"typescript": "^5"
 	},
 	"devDependencies": {
 		"@biomejs/biome": "2.1.1",
-		"boxels-config": "^0.2.0"
+		"@testing-library/dom": "^10.4.1",
+		"@testing-library/jest-dom": "^6.6.4",
+		"boxels-config": "^0.2.0",
+		"jsdom": "^26.1.0"
 	}
 }
