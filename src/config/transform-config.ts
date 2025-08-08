@@ -103,7 +103,5 @@ export function resolveFinalViteConfig(userConfig: BoxelsConfig): UserConfig {
 		scss.additionalData = `${scss.additionalData ?? ''}\n${importLine}`;
 	}
 
-	console.log(finalViteConfig.publicDir);
-
 	return finalViteConfig;
 }

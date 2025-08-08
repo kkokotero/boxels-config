@@ -63,18 +63,62 @@ npm run test
 
 ## ¿Qué puedes hacer con `box`?
 
-| Comando       | Descripción                                                  |
-| ------------- | ------------------------------------------------------------ |
-| `box serve`   | Inicia un servidor de desarrollo con recarga en caliente.    |
-| `box build`   | Compila el proyecto para producción.                         |
-| `box preview` | Sirve la aplicación construida para pruebas locales.         |
-| `box test`    | Ejecuta pruebas con soporte para `Vitest` + entorno DOM.     |
-| `box new`     | Crea un nuevo proyecto Boxels.                               |
-| `box --help`  | Muestra la ayuda general y los comandos disponibles.         |
+| Comando                   | Descripción                                                           |
+| ------------------------- | --------------------------------------------------------------------- |
+| `box serve`               | Inicia un servidor de desarrollo con recarga en caliente.             |
+| `box build`               | Compila el proyecto para producción.                                  |
+| `box preview`             | Sirve la aplicación construida para pruebas locales.                  |
+| `box test`                | Ejecuta pruebas con soporte para `Vitest` + entorno DOM.              |
+| `box integrate:capacitor` | Integra Capacitor al proyecto y añade plataformas como Android o iOS. |
+| `box integrate:electron`  | Integra Electron al proyecto para empaquetar apps de escritorio.      |
+| `box new`                 | Crea un nuevo proyecto Boxels. *(Actualmente deshabilitado)*          |
+| `box --help`              | Muestra la ayuda general y los comandos disponibles.                  |
 
 ---
 
-## Comandos en detalle
+### `box integrate:capacitor`
+
+Integra **Capacitor** en el proyecto actual, permitiéndote crear aplicaciones móviles con tu código web.
+
+```bash
+box integrate:capacitor --app-name "MiApp" --app-id "com.ejemplo.miapp" --platforms android,ios
+```
+
+**Opciones:**
+
+* `--app-name <nombre>` → Nombre de la aplicación.
+* `--app-id <id>` → Identificador único en formato reverso de dominio (ej. `com.ejemplo.app`).
+* `--platforms <lista>` → Plataformas a añadir separadas por comas (`android`, `ios`).
+
+**Qué hace este comando:**
+
+1. Instala las dependencias de Capacitor.
+2. Inicializa Capacitor en tu proyecto.
+3. Añade las plataformas indicadas.
+4. Sincroniza tu código con Capacitor.
+5. Actualiza tu `package.json` con scripts útiles (`cap sync`, `cap open android`, etc.).
+
+---
+
+### `box integrate:electron`
+
+Integra **Electron** al proyecto para empaquetarlo como aplicación de escritorio.
+
+```bash
+box integrate:electron --app-name "MiApp" --app-id "com.ejemplo.miapp"
+```
+
+**Opciones:**
+
+* `--app-name <nombre>` → Nombre de la aplicación de escritorio.
+* `--app-id <id>` → Identificador único de la app.
+
+**Qué hace este comando:**
+
+1. Instala las dependencias necesarias para Electron.
+2. Genera un archivo de entrada (`main.js` o `main.ts`) con la configuración básica.
+3. Añade scripts al `package.json` para ejecutar y empaquetar la app con Electron Builder.
+4. Deja la estructura lista para personalizar el empaquetado.
 
 ### `box serve`
 
