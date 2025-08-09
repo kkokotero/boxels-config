@@ -42,7 +42,6 @@ export function transformBoxelsConfig(config: BoxelsConfig): {
 	const {
 		alias,
 		define,
-		globalStyles,
 		logLevel,
 		plugins,
 		publicDir,
@@ -71,7 +70,6 @@ export function transformBoxelsConfig(config: BoxelsConfig): {
 	};
 
 	const boxelsExtra: Record<string, unknown> = {
-		globalStyles,
 		...rest,
 	};
 
@@ -88,20 +86,6 @@ export function resolveFinalViteConfig(userConfig: BoxelsConfig): UserConfig {
 
 	// 3. Fusionar con config base de Vite (standardConfig)
 	const finalViteConfig: UserConfig = mergeConfig(standardConfig, viteConfig);
-
-	// 4. Insertar estilos globales si aplica
-	if (
-		boxelsExtra.globalStyles &&
-		typeof boxelsExtra.globalStyles === 'string'
-	) {
-		finalViteConfig.css ??= {};
-		finalViteConfig.css.preprocessorOptions ??= {};
-		finalViteConfig.css.preprocessorOptions.scss ??= {};
-
-		const scss = finalViteConfig.css.preprocessorOptions.scss;
-		const importLine = `@use "${boxelsExtra.globalStyles}" as *;`;
-		scss.additionalData = `${scss.additionalData ?? ''}\n${importLine}`;
-	}
 
 	return finalViteConfig;
 }
