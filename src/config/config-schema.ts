@@ -33,10 +33,9 @@ export interface BoxelsConfig {
 	define?: Record<string, unknown>;
 
 	/**
-	 * Nivel de logging que usará Vite.
-	 * Puede ser 'info', 'warn', 'error', 'silent'.
+	 * Ruta al archivo de estilos globales del proyecto.
 	 */
-	logLevel?: 'info' | 'warn' | 'error' | 'silent';
+	globalStyles?: string;
 
 	/**
 	 * Lista de plugins adicionales a aplicar (Vite o personalizados).

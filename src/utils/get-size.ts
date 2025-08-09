@@ -7,7 +7,7 @@ import * as path from 'node:path';
  * @param bytes - Tamaño en bytes
  * @returns Tamaño formateado como cadena
  */
-function formatSize(bytesSize: number): string {
+export function formatSize(bytesSize: number): string {
 	let bytes = bytesSize;
 	const units = ['B', 'KB', 'MB', 'GB', 'TB'];
 	let index = 0;

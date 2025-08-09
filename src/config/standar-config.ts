@@ -64,7 +64,7 @@ export const standardConfig: BoxelsUserConfig = {
 	css: {
 		modules: {
 			localsConvention: 'camelCaseOnly', 
-			generateScopedName: '__[hash:base64:10]',
+			generateScopedName: '[name]__[local]__[hash:base64:5]',
 		},
 		preprocessorOptions: {
 			scss: {
