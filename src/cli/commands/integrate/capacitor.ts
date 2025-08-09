@@ -50,7 +50,7 @@ program
 			const appId = options.appId || config.root;
 
 			logger.info('Instalando dependencias de Capacitor...');
-			execSync('npm install @capacitor/core @capacitor/cli', {
+			execSync('npm install --save-dev @capacitor/core @capacitor/cli', {
 				stdio: 'inherit',
 			});
 
@@ -61,7 +61,7 @@ program
 			for (const platform of platforms) {
 				if (CAPACITOR_PLATFORMS.includes(platform)) {
 					logger.info(`Agregando plataforma: ${platform}...`);
-					execSync(`npm install @capacitor/${platform}`, { stdio: 'inherit' });
+					execSync(`npm install --save-dev @capacitor/${platform}`, { stdio: 'inherit' });
 					execSync(`npx cap add ${platform}`, { stdio: 'inherit' });
 				} else {
 					logger.warn(`Plataforma no soportada: ${platform}`);
