@@ -7,7 +7,6 @@ const parseFilePath = (path: string) => path.replace(process.cwd(), '.');
 
 interface ServeCommand {
 	port?: number;
-	host?: string;
 	base?: string;
 	mode?: 'development' | 'production';
 	root?: string;
@@ -21,7 +20,6 @@ program
 		'Inicia el servidor de desarrollo con recarga en caliente (HMR).',
 	)
 	.option('--port <port>', 'Puerto para el servidor de desarrollo (ej: 3000)')
-	.option('--host <host>', 'Host/IP para enlazar el servidor (ej: 127.0.0.1)')
 	.option('--base <base>', 'Ruta base pública (ej: /subpath/)')
 	.option('--mode <mode>', 'Modo de entorno (ej: development)')
 	.option('--root <path>', 'Directorio raíz del proyecto')
@@ -38,7 +36,6 @@ program
 			base: options.base,
 			server: {
 				port: options.port,
-				host: options.host,
 				open: options.open,
 			},
 		};
