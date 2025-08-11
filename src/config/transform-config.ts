@@ -48,13 +48,18 @@ export function transformBoxelsConfig(config: BoxelsConfig): {
 		root,
 		server,
 		build,
+		exclude,
+		include,
 		...rest
 	} = config;
 
 	const viteBuild: UserConfig['build'] | undefined = build
 		? {
 				...build,
-				rollupOptions: build.input ? { input: build.input as any } : undefined,
+				rollupOptions: {
+					input: build.input ?? '',
+					external: exclude,
+				},
 			}
 		: undefined;
 
@@ -66,6 +71,10 @@ export function transformBoxelsConfig(config: BoxelsConfig): {
 		root,
 		server,
 		build: viteBuild,
+		optimizeDeps: {
+			exclude,
+			include,
+		},
 	};
 
 	const boxelsExtra: Record<string, unknown> = {

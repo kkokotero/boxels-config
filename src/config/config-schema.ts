@@ -32,6 +32,9 @@ export interface BoxelsConfig {
 	 */
 	define?: Record<string, unknown>;
 
+	exclude?: string[];
+	include?: string[];
+
 	/**
 	 * Ruta al archivo de estilos globales del proyecto.
 	 */
