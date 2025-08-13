@@ -58,8 +58,8 @@ npm run test
 
 ### Requisitos
 
-* Node.js v18 o superior
-* NPM v7 o superior
+- Node.js v18 o superior
+- NPM v7 o superior
 
 ## ¿Qué puedes hacer con `box`?
 
@@ -68,10 +68,11 @@ npm run test
 | `box serve`               | Inicia un servidor de desarrollo con recarga en caliente.             |
 | `box build`               | Compila el proyecto para producción.                                  |
 | `box preview`             | Sirve la aplicación construida para pruebas locales.                  |
+| `box share`               | Sirve públicamente la build de producción.                            |
 | `box test`                | Ejecuta pruebas con soporte para `Vitest` + entorno DOM.              |
 | `box integrate:capacitor` | Integra Capacitor al proyecto y añade plataformas como Android o iOS. |
 | `box integrate:electron`  | Integra Electron al proyecto para empaquetar apps de escritorio.      |
-| `box new`                 | Crea un nuevo proyecto Boxels. *(Actualmente deshabilitado)*          |
+| `box new`                 | Crea un nuevo proyecto Boxels. _(Actualmente deshabilitado)_          |
 | `box --help`              | Muestra la ayuda general y los comandos disponibles.                  |
 
 ---
@@ -86,9 +87,9 @@ box integrate:capacitor --app-name "MiApp" --app-id "com.ejemplo.miapp" --platfo
 
 **Opciones:**
 
-* `--app-name <nombre>` → Nombre de la aplicación.
-* `--app-id <id>` → Identificador único en formato reverso de dominio (ej. `com.ejemplo.app`).
-* `--platforms <lista>` → Plataformas a añadir separadas por comas (`android`, `ios`).
+- `--app-name <nombre>` → Nombre de la aplicación.
+- `--app-id <id>` → Identificador único en formato reverso de dominio (ej. `com.ejemplo.app`).
+- `--platforms <lista>` → Plataformas a añadir separadas por comas (`android`, `ios`).
 
 **Qué hace este comando:**
 
@@ -110,8 +111,8 @@ box integrate:electron --app-name "MiApp" --app-id "com.ejemplo.miapp"
 
 **Opciones:**
 
-* `--app-name <nombre>` → Nombre de la aplicación de escritorio.
-* `--app-id <id>` → Identificador único de la app.
+- `--app-name <nombre>` → Nombre de la aplicación de escritorio.
+- `--app-id <id>` → Identificador único de la app.
 
 **Qué hace este comando:**
 
@@ -130,13 +131,13 @@ box serve [opciones]
 
 **Opciones útiles:**
 
-* `--port <port>`: Puerto del servidor (ej. `3000`)
-* `--host <host>`: IP o nombre del host (ej. `127.0.0.1`)
-* `--open <true|false|navegador>`: Abre el navegador automáticamente
-* `--base <base>`: Ruta base (ej. `/subpath/`)
-* `--mode <modo>`: Modo de ejecución (`development`, `staging`, etc.)
-* `--root <ruta>`: Directorio raíz del proyecto
-* `--public-dir <ruta>`: Carpeta para archivos estáticos
+- `--port <port>`: Puerto del servidor (ej. `3000`)
+- `--host <host>`: IP o nombre del host (ej. `127.0.0.1`)
+- `--open <true|false|navegador>`: Abre el navegador automáticamente
+- `--base <base>`: Ruta base (ej. `/subpath/`)
+- `--mode <modo>`: Modo de ejecución (`development`, `staging`, etc.)
+- `--root <ruta>`: Directorio raíz del proyecto
+- `--public-dir <ruta>`: Carpeta para archivos estáticos
 
 ---
 
@@ -150,10 +151,10 @@ box build [opciones]
 
 **Opciones comunes:**
 
-* `--base <base>`: Ruta base para assets
-* `--mode <modo>`: Modo de build (`production`, `staging`, etc.)
-* `--root <ruta>`: Carpeta raíz del proyecto
-* `--public-dir <ruta>`: Archivos estáticos adicionales
+- `--base <base>`: Ruta base para assets
+- `--mode <modo>`: Modo de build (`production`, `staging`, etc.)
+- `--root <ruta>`: Carpeta raíz del proyecto
+- `--public-dir <ruta>`: Archivos estáticos adicionales
 
 ---
 
@@ -167,12 +168,12 @@ box preview [opciones]
 
 **Opciones disponibles:**
 
-* `--port <port>`: Puerto para el preview
-* `--host <host>`: IP o hostname
-* `--open <true|false>`: Abre el navegador automáticamente
-* `--mode <modo>`: Modo de entorno (`production`, etc.)
-* `--root <ruta>`: Raíz del proyecto
-* `--public-dir <ruta>`: Carpeta pública
+- `--port <port>`: Puerto para el preview
+- `--host <host>`: IP o hostname
+- `--open <true|false>`: Abre el navegador automáticamente
+- `--mode <modo>`: Modo de entorno (`production`, etc.)
+- `--root <ruta>`: Raíz del proyecto
+- `--public-dir <ruta>`: Carpeta pública
 
 ---
 
@@ -186,28 +187,28 @@ box test [opciones]
 
 **Opciones disponibles:**
 
-* `--watch`: Activa modo observación
-* `--coverage`: Genera informe de cobertura
-* `--ui`: Abre la interfaz gráfica de Vitest
+- `--watch`: Activa modo observación
+- `--coverage`: Genera informe de cobertura
+- `--ui`: Abre la interfaz gráfica de Vitest
 
 **Nota:** Para entornos DOM realistas puedes importar manualmente el archivo `setupTestingBoxels` en tu configuración de pruebas:
 
 ```ts
 // vitest.config.ts
-import { defineConfig } from 'vitest/config';
-import { setupTestingBoxels } from 'boxels/test';
+import { defineConfig } from "vitest/config";
+import { setupTestingBoxels } from "boxels/test";
 
 export default defineConfig({
   test: {
     setupFiles: [setupTestingBoxels],
-    environment: 'happy-dom',
+    environment: "happy-dom",
   },
 });
 ```
 
 ---
 
-### `box new` *(deshabilitado)*
+### `box new` _(deshabilitado)_
 
 Comando para crear un nuevo proyecto desde una plantilla:
 
@@ -237,9 +238,9 @@ Boxels permite definir configuraciones personalizadas mediante un archivo de con
 
 ### Archivos soportados:
 
-* `boxels.config.js`
-* `boxels.config.mjs`
-* `boxels.config.cjs`
+- `boxels.config.js`
+- `boxels.config.mjs`
+- `boxels.config.cjs`
 
 ### Ejemplo mínimo (`boxels.config.mjs`):
 
@@ -360,5 +361,5 @@ plugins: [myCustomPlugin()];
 
 ## Recursos adicionales
 
-* Documentación de configuración de Vite: [https://vitejs.dev/config/](https://vitejs.dev/config/)
-* Repositorio oficial de Boxels: [Boxels](https://github.com/kkokotero/boxels)
+- Documentación de configuración de Vite: [https://vitejs.dev/config/](https://vitejs.dev/config/)
+- Repositorio oficial de Boxels: [Boxels](https://github.com/kkokotero/boxels)
