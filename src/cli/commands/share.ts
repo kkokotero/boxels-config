@@ -13,7 +13,7 @@ program
 			const config = await userDefinedConfig;
 
 			// Determinar raíz del proyecto
-			const projectRoot = resolve(config?.root ?? process.cwd());
+			const projectRoot = resolve(process.cwd());
 
 			// Detectar carpeta de build (outDir) o usar 'dist'
 			const outDir = resolve(projectRoot, config?.build?.outDir ?? 'dist');
@@ -41,6 +41,8 @@ program
 				String(config.preview?.port || '4321'),
 				...userArgs,
 			];
+
+			logger.info(outDir);
 
 			// Ejecutar vite preview en la raíz del proyecto
 			const child = spawn(viteBin, args, {
