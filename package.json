@@ -29,14 +29,14 @@
   "bugs": {
     "url": "https://github.com/kkokotero/boxels-config/issues"
   },
-  "main": "./dist/index.mjs",
-  "module": "./dist/index.mjs",
-  "types": "./dist/index.d.mts",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.cjs",
+  "types": "./dist/index.d.cts",
   "exports": {
     ".": {
-      "import": "./dist/config/index.mjs",
-      "require": "./dist/config/index.js",
-      "types": "./dist/config/index.d.mts"
+      "import": "./dist/config/index.cjs",
+      "require": "./dist/config/index.cjs",
+      "types": "./dist/config/index.d.cts"
     }
   },
   "typesVersions": {
@@ -60,7 +60,7 @@
     "node": ">=18"
   },
   "bin": {
-    "box": "./dist/index.js"
+    "box": "./dist/index.cjs"
   },
   "scripts": {
     "build": "tsup",
