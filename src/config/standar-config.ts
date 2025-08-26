@@ -1,4 +1,3 @@
-import { logger } from '@utils/logger';
 import { resolve } from 'node:path';
 import type { UserConfig } from 'vite';
 
@@ -39,7 +38,7 @@ export const standardConfig: BoxelsUserConfig = {
 
 	optimizeDeps: {
 		include: [],
-		exclude: [],
+		exclude: ['esbuild'],
 	},
 
 	build: {
@@ -63,7 +62,7 @@ export const standardConfig: BoxelsUserConfig = {
 
 	css: {
 		modules: {
-			localsConvention: 'camelCaseOnly', 
+			localsConvention: 'camelCaseOnly',
 			generateScopedName: '[name]__[local]__[hash:base64:5]',
 		},
 		preprocessorOptions: {

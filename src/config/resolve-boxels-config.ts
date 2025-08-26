@@ -31,7 +31,13 @@ export async function resolveBoxelsConfig(
 		if (!existsSync(filePath)) continue;
 
 		try {
-			const module = await import(pathToFileURL(filePath).href);
+			let module: any;
+
+			if (fileName.endsWith('.cjs')) {
+				module = require(filePath);
+			} else {
+				module = await import(pathToFileURL(filePath).href);
+			}
 
 			if (typeof module.default === 'object' && module.default !== null) {
 				return resolveFinalViteConfig(module.default as BoxelsConfig);

@@ -29,14 +29,14 @@
   "bugs": {
     "url": "https://github.com/kkokotero/boxels-config/issues"
   },
-  "main": "./dist/src/index.js",
-  "module": "./dist/src/index.js",
-  "types": "./dist/types/index.d.ts",
+  "main": "./dist/index.mjs",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.mts",
   "exports": {
     ".": {
-      "import": "./dist/config/index.js",
+      "import": "./dist/config/index.mjs",
       "require": "./dist/config/index.js",
-      "types": "./dist/config/index.d.ts"
+      "types": "./dist/config/index.d.mts"
     }
   },
   "typesVersions": {
@@ -64,7 +64,7 @@
   },
   "scripts": {
     "build": "tsup",
-    "bin": "node ./dist/index.js",
+    "bin": "node ./dist/index.cjs",
     "prepublishOnly": "npm run build"
   },
   "devDependencies": {
@@ -83,7 +83,7 @@
   },
   "dependencies": {
     "@vitest/ui": "3.2.4",
-    "boxels": "^2.0.0",
+    "boxels": "^2.0.2",
     "sass": "^1.90.0",
     "tsx": "^4.20.3",
     "vite": "^7.0.4",

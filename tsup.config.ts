@@ -1,8 +1,11 @@
 import { defineConfig } from 'tsup';
 
-export default defineConfig({
+export default defineConfig([
+	{
 		entry: ['src/**/*.ts'],
-		format: ['esm'],
+		outDir: 'dist',
+		format: ['cjs'],
+		cjsInterop: true,
 		splitting: true,
 		minify: true,
 		dts: true,
@@ -13,7 +16,6 @@ export default defineConfig({
 		shims: true,
 		bundle: true,
 		treeshake: true,
-		outDir: 'dist',
 		external: [
 			'vite',
 			'util',
@@ -27,6 +29,14 @@ export default defineConfig({
 			'readline',
 			'module',
 			'os',
+			'inspector',
+			'child_process',
+			'tty',
 		],
-		onSuccess: 'chmod +x ./dist/index.js',
-	});
+		onSuccess: 'chmod +x ./dist/index.cjs',
+		outExtension({ format }) {
+			if (format === 'cjs') return { js: '.cjs' };
+			return { js: '.js' };
+		},
+	},
+]);
