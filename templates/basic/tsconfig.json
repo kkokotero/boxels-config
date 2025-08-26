@@ -25,7 +25,7 @@
 		"noUnusedParameters": false,
 		"noPropertyAccessFromIndexSignature": false,
 
-    "types": ["./node_modules/boxels/dist/types/index.d.ts"],
+		"types": ["boxels/types"],
 
 		"jsx": "react-jsx",
 		"jsxImportSource": "boxels"

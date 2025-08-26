@@ -2,7 +2,7 @@ import { defineConfig } from 'tsup';
 
 export default defineConfig({
 		entry: ['src/**/*.ts'],
-		format: ['cjs'],
+		format: ['esm'],
 		splitting: true,
 		minify: true,
 		dts: true,
@@ -28,5 +28,5 @@ export default defineConfig({
 			'module',
 			'os',
 		],
-		onSuccess: 'chmod +x ./dist/index.cjs',
+		onSuccess: 'chmod +x ./dist/index.js',
 	});

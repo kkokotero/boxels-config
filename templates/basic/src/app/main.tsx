@@ -1,6 +1,9 @@
-import { mount, signal } from 'boxels/core';
+import { signal } from 'boxels/core';
 
 import styles from './main.module.css';
+import { mount } from 'boxels/dom';
+
+import Button from "./Button.box"
 
 export const App = () => {
 	const count = signal(0);
@@ -22,6 +25,9 @@ export const App = () => {
 					>
 						Disminuir
 					</button>
+					<Button>
+						Saludos
+					</Button>
 					<input
 						type="number"
 						$on:input={(e) => {

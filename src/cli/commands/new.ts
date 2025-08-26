@@ -14,10 +14,11 @@ import {
 	readFileSync,
 	writeFileSync,
 	renameSync,
+	appendFileSync,
 } from 'node:fs';
-import { resolve,dirname, join } from 'node:path';
+import { resolve, dirname, join } from 'node:path';
 import { execSync } from 'node:child_process';
-import { bold, cyan, red } from 'kolorist';
+import { bold, cyan, red, green } from 'kolorist';
 import { program } from '@cli/program';
 import { fileURLToPath } from 'node:url';
 
@@ -33,6 +34,8 @@ interface OpcionesUsuarioProyecto {
 	estilos: string;
 	instalar: boolean;
 }
+
+const __dirname = dirname(fileURLToPath(import.meta.url));
 
 // ==========================
 // Función principal
@@ -64,7 +67,7 @@ export async function crearNuevoProyecto(inicial: Partial<OpcionesUsuarioProyect
 
 	await inicializarRepositorioGit(directorioDestino);
 
-	outro(`Proyecto ${bold(opciones.nombre)} creado con éxito`);
+	outro(green(`✔ Proyecto ${bold(opciones.nombre)} creado con éxito`));
 }
 
 // ==========================
@@ -136,6 +139,8 @@ function validarOpciones(opciones: OpcionesUsuarioProyecto): string[] {
 	const errores: string[] = [];
 
 	if (!opciones.nombre.trim()) errores.push('El nombre no puede estar vacío.');
+	if (!/^[a-zA-Z0-9-_]+$/.test(opciones.nombre))
+		errores.push('El nombre solo puede contener letras, números, guiones y guiones bajos.');
 	if (!ESTILOS_VALIDOS.includes(opciones.estilos as any))
 		errores.push(
 			`Estilo inválido: "${opciones.estilos}". Opciones válidas: ${ESTILOS_VALIDOS.join(', ')}`,
@@ -148,50 +153,76 @@ function validarOpciones(opciones: OpcionesUsuarioProyecto): string[] {
 // Generar estructura del proyecto
 // ==========================
 
-const __dirname = dirname(fileURLToPath(import.meta.url));
-
 function encontrarDirectorioTemplates(): string | null {
 	let actual = __dirname;
 
 	while (true) {
 		const posible = join(actual, 'templates');
-		if (existsSync(posible)) {
-			return posible;
-		}
+		if (existsSync(posible)) return posible;
 
 		const padre = dirname(actual);
-		if (padre === actual) break; // llegó a la raíz
+		if (padre === actual) break;
 		actual = padre;
 	}
 
 	return null;
 }
 
-export async function generarProyecto(opciones: OpcionesUsuarioProyecto, directorioDestino: string) {
-	const raizTemplates = encontrarDirectorioTemplates();
+async function generarProyecto(opciones: OpcionesUsuarioProyecto, destino: string) {
+	const s = spinner();
+	s.start('Generando proyecto...');
 
+	const raizTemplates = encontrarDirectorioTemplates();
 	if (!raizTemplates) {
 		outro('No se encontró el directorio "templates".');
 		process.exit(1);
 	}
 
 	const directorioPlantilla = join(raizTemplates, opciones.plantilla);
-
 	if (!existsSync(directorioPlantilla)) {
 		outro(red(`Plantilla no encontrada: ${opciones.plantilla}`));
 		process.exit(1);
 	}
 
-	cpSync(directorioPlantilla, directorioDestino, { recursive: true });
+	cpSync(directorioPlantilla, destino, { recursive: true });
 
+	// ✅ Ajustar gitignore
+	ajustarGitignore(destino);
+
+	// ✅ Transformar extensiones de estilos
 	const extension = obtenerExtensionEstilo(opciones.estilos);
-	transformarExtensionesEstilo(directorioDestino, '.css', extension);
+	transformarExtensionesEstilo(destino, '.css', extension);
 
-	reemplazarEnArchivos(directorioDestino, {
+	// ✅ Reemplazar placeholders
+	reemplazarEnArchivos(destino, {
 		__PROJECT_NAME__: opciones.nombre,
 		__PROJECT_SLUG__: opciones.nombre.toLowerCase().replace(/\s+/g, '-'),
 	});
+
+	s.stop('Proyecto generado.');
 }
+
+// ==========================
+// Ajuste de gitignore
+// ==========================
+
+function ajustarGitignore(destino: string) {
+	const gitignorePath = join(destino, '.gitignore');
+	const plantillaGitignore = join(destino, 'gitignore');
+
+	if (existsSync(plantillaGitignore)) {
+		if (!existsSync(gitignorePath)) {
+			renameSync(plantillaGitignore, gitignorePath);
+		} else {
+			// Merge en caso de que exista uno
+			const nuevoContenido = readFileSync(plantillaGitignore, 'utf8');
+			appendFileSync(gitignorePath, `\n# Desde plantilla\n${nuevoContenido}`);
+			// Elimina el archivo temporal
+			writeFileSync(plantillaGitignore, '', 'utf8');
+		}
+	}
+}
+
 // ==========================
 // Utilidades de transformación
 // ==========================
@@ -202,42 +233,36 @@ function obtenerExtensionEstilo(ext: string): string {
 }
 
 function reemplazarEnArchivos(dir: string, reemplazos: Record<string, string>) {
-	const entradas = readdirSync(dir, { withFileTypes: true });
-
-	for (const entrada of entradas) {
-		const rutaCompleta = join(dir, entrada.name);
-
+	for (const entrada of readdirSync(dir, { withFileTypes: true })) {
+		const ruta = join(dir, entrada.name);
 		if (entrada.isDirectory()) {
-			reemplazarEnArchivos(rutaCompleta, reemplazos);
-		} else if (entrada.isFile()) {
-			let contenido = readFileSync(rutaCompleta, 'utf8');
+			reemplazarEnArchivos(ruta, reemplazos);
+		} else {
+			let contenido = readFileSync(ruta, 'utf8');
 			for (const [clave, valor] of Object.entries(reemplazos)) {
 				contenido = contenido.replaceAll(clave, valor);
 			}
-			writeFileSync(rutaCompleta, contenido, 'utf8');
+			writeFileSync(ruta, contenido, 'utf8');
 		}
 	}
 }
 
 function transformarExtensionesEstilo(dir: string, desdeExt: string, hastaExt: string) {
-	const entradas = readdirSync(dir, { withFileTypes: true });
-
-	for (const entrada of entradas) {
-		const rutaCompleta = join(dir, entrada.name);
+	for (const entrada of readdirSync(dir, { withFileTypes: true })) {
+		const ruta = join(dir, entrada.name);
 
 		if (entrada.isDirectory()) {
-			transformarExtensionesEstilo(rutaCompleta, desdeExt, hastaExt);
-		} else if (entrada.isFile()) {
-			if (entrada.name.endsWith(desdeExt)) {
-				const nuevaRuta = rutaCompleta.replace(desdeExt, hastaExt);
-				renameSync(rutaCompleta, nuevaRuta);
-			}
+			transformarExtensionesEstilo(ruta, desdeExt, hastaExt);
+		} else if (entrada.name.endsWith(desdeExt)) {
+			const nuevaRuta = ruta.replace(desdeExt, hastaExt);
+			renameSync(ruta, nuevaRuta);
 
+			// Actualiza referencias en TSX/JSX
 			if (/\.(ts|tsx|js|jsx)$/.test(entrada.name)) {
-				let contenido = readFileSync(rutaCompleta, 'utf8');
+				let contenido = readFileSync(nuevaRuta, 'utf8');
 				const regex = new RegExp(`(['"\`])([^'"\`]+)\\${desdeExt}\\1`, 'g');
-				const actualizado = contenido.replace(regex, (_m, q, p) => `${q}${p}${hastaExt}${q}`);
-				if (contenido !== actualizado) writeFileSync(rutaCompleta, actualizado, 'utf8');
+				contenido = contenido.replace(regex, (_m, q, p) => `${q}${p}${hastaExt}${q}`);
+				writeFileSync(nuevaRuta, contenido, 'utf8');
 			}
 		}
 	}
@@ -247,14 +272,14 @@ function transformarExtensionesEstilo(dir: string, desdeExt: string, hastaExt: s
 // Instalación de dependencias
 // ==========================
 
-async function instalarDependencias(directorioDestino: string) {
+async function instalarDependencias(destino: string) {
 	const s = spinner();
 	s.start('Instalando dependencias...');
 	try {
-		execSync('npm install', { cwd: directorioDestino, stdio: 'ignore' });
+		execSync('npm install', { cwd: destino, stdio: 'ignore' });
 		s.stop('Dependencias instaladas.');
 	} catch {
-		s.stop('Falló la instalación automática.');
+		s.stop(red('Falló la instalación automática.'));
 	}
 }
 
@@ -262,18 +287,13 @@ async function instalarDependencias(directorioDestino: string) {
 // Inicializar repositorio Git
 // ==========================
 
-async function inicializarRepositorioGit(directorioDestino: string) {
+async function inicializarRepositorioGit(destino: string) {
 	try {
 		execSync('git --version', { stdio: 'ignore' });
-
-		const dirGit = resolve(directorioDestino, '.git');
-		if (!existsSync(dirGit)) {
-			execSync('git init', { cwd: directorioDestino, stdio: 'ignore' });
-			execSync('git add .', { cwd: directorioDestino, stdio: 'ignore' });
-			execSync('git commit -m "Initial commit"', {
-				cwd: directorioDestino,
-				stdio: 'ignore',
-			});
+		if (!existsSync(join(destino, '.git'))) {
+			execSync('git init', { cwd: destino, stdio: 'ignore' });
+			execSync('git add .', { cwd: destino, stdio: 'ignore' });
+			execSync('git commit -m "Initial commit"', { cwd: destino, stdio: 'ignore' });
 		}
 	} catch {}
 }

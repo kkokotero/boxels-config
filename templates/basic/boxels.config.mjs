@@ -1,5 +1,6 @@
 import { defineConfig } from 'boxels-config';
 import { resolve } from 'node:path';
+import { boxComponentPlugin } from 'boxels/plugins';
 
 export default defineConfig({
 	root: 'src',
@@ -7,4 +8,5 @@ export default defineConfig({
 	build: {
 		input: 'src/index.html',
 	},
+	plugins: [boxComponentPlugin],
 });
