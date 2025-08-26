@@ -34,9 +34,9 @@
   "types": "./dist/types/index.d.ts",
   "exports": {
     ".": {
-      "import": "./dist/config/index.cjs",
-      "require": "./dist/config/index.cjs",
-      "types": "./dist/config/index.d.cts"
+      "import": "./dist/config/index.js",
+      "require": "./dist/config/index.js",
+      "types": "./dist/config/index.d.ts"
     }
   },
   "typesVersions": {
