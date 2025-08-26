@@ -60,7 +60,7 @@
     "node": ">=18"
   },
   "bin": {
-    "box": "./dist/index.cjs"
+    "box": "./dist/index.js"
   },
   "scripts": {
     "build": "tsup",
