@@ -12,8 +12,8 @@
 		"typescript": "^5"
 	},
 	"devDependencies": {
-		"boxels": "^1.8.6",
-		"boxels-config": "^1.7.4",
+		"boxels": "^2.0.3",
+		"boxels-config": "^1.7.9",
 		"@biomejs/biome": "2.1.1",
 		"@testing-library/dom": "^10.4.1",
 		"@testing-library/jest-dom": "^6.6.4",

@@ -34,7 +34,3 @@ coverage
 *.tsbuildinfo
 
 .boxels
-
-./boxels.config.js
-./boxels.config.mjs
-./boxels.config.cjs

@@ -8,5 +8,5 @@ export default defineConfig({
 	build: {
 		input: 'src/index.html',
 	},
-	plugins: [boxComponentPlugin],
+	plugins: [boxComponentPlugin()],
 });

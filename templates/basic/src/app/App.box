@@ -1,0 +1,172 @@
+<script>
+  import { signal } from 'boxels/core';
+  import { $, appendChild } from 'boxels/dom';
+  import { createDelay } from 'boxels/hooks';
+
+  import Button from './components/Button.box';
+  import Input from './components/Input.box';
+
+  const count = signal(0);
+
+  let displayContainer;
+
+  const handleClick = (option) => {
+    const display = $('p', {class: option === 'negative' ? styles.countLess : styles.countPlus}, option === 'negative' ? "-1" : "+1")
+    appendChild(displayContainer, display);
+
+    createDelay(() => {
+      display.destroy();
+    }, 1500);
+  }
+</script>
+
+<main class={styles.container}>
+  <h1 class={styles.title}>__PROJECT_NAME__</h1>
+
+  <section class={styles.counter}>
+    <div $lifecycle:mount={(e) => (displayContainer = e)}></div>
+    <p class={styles.countDisplay}>{count}</p>
+
+    <div class={styles.actions}> 
+      <Button
+        type="button"
+        aria-label="Disminuir contador"
+        $on:click={() => {
+          count.update((c) => c - 1);
+          handleClick('negative');
+        }}
+      >
+        Disminuir
+      </Button>
+
+      <Input count={count} aria-label="Valor del contador" />
+
+      <Button
+        type="button"
+        aria-label="Aumentar contador"
+        $on:click={() => {
+          count.update((c) => c + 1);
+           handleClick('positive');
+        }}
+      >
+        Aumentar
+      </Button>
+    </div>
+  </section>
+</main>
+
+<style>
+    * {
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serifF;
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+    }
+
+  .container {
+    --bg: #f9fafb;
+    --text: #111827;
+    --accent: #333333ff;
+    --accent-dark: rgb(24, 24, 24);
+    --accent-hover: #4b4b4bff;
+
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--bg);
+    color: var(--text);
+    text-align: center;
+  }
+
+  .title {
+    font-size: 3rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+  }
+
+  .counter {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+    margin-top: 2rem;
+  }
+  
+
+  .countDisplay {
+    font-size: 4rem;
+    font-weight: 700;
+    color: var(--accent);
+    margin: 0;
+  }
+
+  @keyframes fade-in-plus {
+    from {
+      transform: translate(120%, 50%);
+      opacity: 1;
+    }
+    to {
+      transform: translate(120%, -50%);
+      opacity: 0;
+    }
+  }
+
+  .countPlus {
+    position: absolute;
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--accent-dark);
+    margin: 0;
+    transform: translate(120%, 50%);
+    opacity: 0;
+    animation: fade-in-plus 1s forwards;
+  }
+
+    @keyframes fade-in-less {
+    from {
+      transform: translate(-180%, 50%);
+      opacity: 1;
+    }
+    to {
+      transform: translate(-180%, -50%);
+      opacity: 0;
+    }
+  }
+
+  .countLess {
+    position: absolute;
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--accent-dark);
+    margin: 0;
+    transform: translate(-120%, 50%);
+    opacity: 0;
+    animation: fade-in-less 1s forwards;
+  }
+
+  .actions {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  @media (max-width: 480px) {
+    .title {
+      font-size: 2.2rem;
+    }
+    .countDisplay {
+      font-size: 3rem;
+    }
+    .actions {
+      flex-direction: column;
+      width: 100%;
+    }
+    .actions :global(button),
+    .actions :global(input) {
+      width: 100%;
+    }
+  }
+</style>
